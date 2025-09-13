@@ -2,6 +2,12 @@
 
 A modern, feature-rich task tracker built as a Progressive Web App (PWA) with HTML, Tailwind CSS, and vanilla JavaScript. This app includes advanced features like persistent data storage, Markdown support, dark mode, and offline capabilities while maintaining simplicity and performance.
 
+## 🌐 Live Demo
+
+**Try it now:** [https://rohitkusharma.github.io/To-Do-List/](https://rohitkusharma.github.io/To-Do-List/)
+
+*The app is installable as a PWA - look for the install button after interacting with the app!*
+
 ## ✨ Features
 
 ### Core Task Management
