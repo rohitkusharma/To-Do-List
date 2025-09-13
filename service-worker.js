@@ -1,5 +1,5 @@
 // Basic offline cache for PWA
-const CACHE = 'task-manager-cache-v3';
+const CACHE = 'todo-list-cache-v4';
 const ASSETS = [
   './',
   './index.html',
