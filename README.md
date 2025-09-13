@@ -103,7 +103,7 @@ Then visit **http://localhost:8080**
 The description field supports rich Markdown formatting:
 
 - **Bold** and *italic* text
-- [Links](https://example.com) and images
+- Links and images
 - `inline code` and code blocks
 - Lists (bulleted and numbered)
 - > Blockquotes
