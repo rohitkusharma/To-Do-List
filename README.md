@@ -1,15 +1,19 @@
 # To-Do-List — Progressive Web App
 
-A modern, feature-rich task tracker built as a Progressive Web App (PWA) with HTML, Tailwind CSS, and vanilla JavaScript. This single-session app includes advanced features like Markdown support, dark mode, and offline capabilities while maintaining simplicity and performance.
+A modern, feature-rich task tracker built as a Progressive Web App (PWA) with HTML, Tailwind CSS, and vanilla JavaScript. This app includes advanced features like persistent data storage, Markdown support, dark mode, and offline capabilities while maintaining simplicity and performance.
 
 ## ✨ Features
 
 ### Core Task Management
-- ✅ Add, edit, delete tasks with inline editing
+- ✅ **Add tasks** - Quick task creation with title, priority, category, and detailed descriptions
+- ✏️ **Edit tasks** - Inline editing of all task properties
+- 🗑️ **Delete tasks** - Remove individual tasks or bulk clear completed ones
+- ✔️ **Mark as completed** - Toggle completion status with visual feedback and strike-through styling
+- 💾 **Persistent storage** - Tasks automatically saved to localStorage and restored on page reload
 - 📝 Rich task descriptions with **Markdown support** (bold, italic, links, lists, code, etc.)
 - 🎯 Priority levels (Low, Normal, High) with visual indicators
 - 🏷️ Category organization and filtering
-- ✔️ Toggle completion with visual feedback and celebrations
+- 🎉 Celebration animations on task completion
 - 📊 Real-time task statistics and completion counter
 
 ### User Experience
@@ -38,12 +42,13 @@ A modern, feature-rich task tracker built as a Progressive Web App (PWA) with HT
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: HTML5, CSS3, ES6+ Modules
-- **Styling**: Tailwind CSS (CDN) with custom brand colors
-- **Icons**: Lucide Icons (CDN)
-- **Markdown**: Marked.js + DOMPurify for safe rendering
-- **PWA**: Web App Manifest + Service Worker
-- **No frameworks** - Pure vanilla JavaScript for maximum performance
+- **Frontend**: HTML5, CSS3, ES6+ JavaScript Modules
+- **Styling**: Tailwind CSS (CDN) with custom brand colors and responsive design
+- **Icons**: Lucide Icons (CDN) for consistent iconography
+- **Markdown**: Marked.js + DOMPurify for safe rendering of rich text
+- **Storage**: localStorage for client-side data persistence
+- **PWA**: Web App Manifest + Service Worker for offline capabilities
+- **No frameworks** - Pure vanilla JavaScript for maximum performance and minimal bundle size
 
 ## 🚀 Quick Start
 
@@ -134,11 +139,12 @@ To-Do-List/
 
 ## 🎯 Design Philosophy
 
-- **Single-session by design** - No persistence beyond current tab
-- **Privacy-first** - No data collection or external services  
-- **Performance-focused** - Minimal dependencies, optimized loading
+- **Persistent data storage** - Tasks are automatically saved and restored between sessions
+- **Privacy-first** - No data collection or external services, all data stays local
+- **Performance-focused** - Minimal dependencies, optimized loading and caching
 - **Accessibility** - Semantic HTML, keyboard navigation, screen reader friendly
 - **Progressive Enhancement** - Works without JavaScript, enhanced with it
+- **Offline-capable** - Full functionality available without internet connection
 
 ## 🔧 Development
 

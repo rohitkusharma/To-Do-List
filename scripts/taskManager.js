@@ -8,6 +8,41 @@ export class TaskManager {
     this.filter = 'all'; // all | active | completed
     this.categoryFilter = '';
     this.completedCount = 0; // reflects CURRENT number of completed tasks
+    this.loadFromStorage();
+  }
+
+  // localStorage persistence methods
+  saveToStorage() {
+    try {
+      const data = {
+        tasks: this.tasks,
+        completedCount: this.completedCount
+      };
+      localStorage.setItem('todolist-data', JSON.stringify(data));
+    } catch (error) {
+      console.warn('Failed to save to localStorage:', error);
+    }
+  }
+
+  loadFromStorage() {
+    try {
+      const stored = localStorage.getItem('todolist-data');
+      if (stored) {
+        const data = JSON.parse(stored);
+        this.tasks = data.tasks || [];
+        this.completedCount = data.completedCount || 0;
+        // Recalculate completed count to ensure consistency
+        this.recalculateCompletedCount();
+      }
+    } catch (error) {
+      console.warn('Failed to load from localStorage:', error);
+      this.tasks = [];
+      this.completedCount = 0;
+    }
+  }
+
+  recalculateCompletedCount() {
+    this.completedCount = this.tasks.filter(t => t.completed).length;
   }
 
   addTask(text, priority = 'normal', category = '', description = '') {
@@ -15,6 +50,7 @@ export class TaskManager {
     if (!trimmed) return null;
     const task = { id: uid(), text: trimmed, description: (description || '').trim(), completed: false, priority, category: (category || '').trim() };
     this.tasks.push(task);
+    this.saveToStorage();
     return task;
   }
 
@@ -24,6 +60,7 @@ export class TaskManager {
     const trimmed = (newText || '').trim();
     if (!trimmed) return false;
     t.text = trimmed;
+    this.saveToStorage();
     return true;
   }
 
@@ -31,6 +68,7 @@ export class TaskManager {
     const t = this.tasks.find(t => t.id === id);
     if (!t) return false;
     t.description = (newDesc || '').trim();
+    this.saveToStorage();
     return true;
   }
 
@@ -39,6 +77,7 @@ export class TaskManager {
     if (!t) return false;
     if (!['low', 'normal', 'high'].includes(newPriority)) return false;
     t.priority = newPriority;
+    this.saveToStorage();
     return true;
   }
 
@@ -52,6 +91,7 @@ export class TaskManager {
     } else if (wasCompleted && !t.completed) {
       this.completedCount = Math.max(0, this.completedCount - 1);
     }
+    this.saveToStorage();
     return t.completed;
   }
 
@@ -62,6 +102,7 @@ export class TaskManager {
       this.completedCount = Math.max(0, this.completedCount - 1);
     }
     this.tasks.splice(idx, 1);
+    this.saveToStorage();
     return true;
   }
 
@@ -70,6 +111,7 @@ export class TaskManager {
     this.tasks = this.tasks.filter(t => !t.completed);
     // After clearing, there should be zero completed tasks left
     this.completedCount = 0;
+    this.saveToStorage();
     return cleared; // number cleared
   }
 
