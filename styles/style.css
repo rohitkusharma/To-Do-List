@@ -1,0 +1,47 @@
+/* Custom optional overrides complementing Tailwind */
+:root {
+  --toast-bg: rgba(15, 23, 42, 0.9);
+}
+
+html, body { height: 100%; }
+
+/* Task item animations */
+.task-enter {
+  opacity: 0;
+  transform: translateY(4px);
+}
+.task-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 180ms ease-out;
+}
+
+.task-completed {
+  background-color: #f0f9ff;
+}
+
+/* Dark theme adjustments */
+.dark .task-completed {
+  background-color: rgba(30, 41, 59, 0.6);
+}
+.dark .toast {
+  background: rgba(2, 6, 23, 0.9);
+}
+
+/* Toast */
+.toast {
+  background: var(--toast-bg);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+/* Confetti bits */
+.confetti-bit {
+  position: absolute;
+  width: 8px;
+  height: 12px;
+  opacity: 0;
+  will-change: transform, opacity;
+}

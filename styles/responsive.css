@@ -1,0 +1,4 @@
+/* Responsive tweaks if needed */
+@media (max-width: 480px) {
+  #categoryInput { display: none; }
+}

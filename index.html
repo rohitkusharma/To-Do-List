@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>To-Do-List</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- PWA basics -->
+  <meta name="theme-color" content="#0ea5e9" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./assets/icons/favicon.svg" sizes="any" />
+  <link rel="icon" type="image/png" href="./assets/icons/favicon-32x32.png" sizes="32x32" />
+  <link rel="shortcut icon" href="./assets/icons/favicon.ico" />
+  <link rel="apple-touch-icon" href="./assets/icons/icon-192x192.png" />
+  <script>
+    // Tailwind config (optional custom colors)
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- App styles (optional custom overrides) -->
+  <link rel="stylesheet" href="./styles/style.css" />
+  <link rel="stylesheet" href="./styles/responsive.css" />
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100">
+  <div class="container mx-auto max-w-4xl px-4 py-8">
+    <!-- Header -->
+    <header class="mb-6 flex items-center justify-between">
+      <h1 class="text-2xl font-bold tracking-tight">To-Do-List</h1>
+      <div class="flex items-center gap-2">
+        <div id="sessionCounter" class="text-sm text-slate-600 dark:text-slate-300">Tasks Completed: <span id="completedCount">0</span></div>
+        <button id="installBtn" class="hidden rounded-lg border border-slate-300 dark:border-slate-600 px-2.5 py-2 hover:bg-slate-50 dark:hover:bg-slate-700" title="Install app">
+          <i data-lucide="download" class="w-4 h-4"></i>
+        </button>
+        <button id="themeToggle" class="rounded-lg border border-slate-300 dark:border-slate-600 px-2.5 py-2 hover:bg-slate-50 dark:hover:bg-slate-700" title="Toggle theme">
+          <i data-lucide="moon" class="w-4 h-4 theme-icon-light"></i>
+          <i data-lucide="sun" class="w-4 h-4 hidden theme-icon-dark"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Card -->
+    <main class="bg-white shadow-sm ring-1 ring-slate-200 rounded-xl overflow-hidden dark:bg-slate-800 dark:ring-slate-700">
+      <!-- Input Row -->
+      <div class="p-4 border-b border-slate-200 space-y-3">
+        <div class="flex flex-wrap items-stretch gap-2">
+          <input id="taskInput" type="text" placeholder="Add a new task..." class="flex-1 min-w-[18rem] rounded-lg border-slate-300 focus:border-brand-500 focus:ring-brand-500 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-slate-100 caret-brand-500 dark:caret-sky-300" />
+          <select id="prioritySelect" class="w-48 md:w-56 rounded-lg border-slate-300 focus:border-brand-500 focus:ring-brand-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-100">
+            <option value="normal">Priority: Normal</option>
+            <option value="low">Priority: Low</option>
+            <option value="high">Priority: High</option>
+          </select>
+            <input id="categoryInput" type="text" placeholder="Category (optional)" class="flex-1 min-w-[14rem] rounded-lg border-slate-300 focus:border-brand-500 focus:ring-brand-500 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-slate-100 caret-brand-500 dark:caret-sky-300" />
+          <button id="addBtn" class="shrink-0 inline-flex items-center gap-2 rounded-lg bg-brand-600 px-4 py-2 text-white hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            Add
+          </button>
+        </div>
+        <div>
+            <textarea id="descInput" rows="4" placeholder="Details (optional)"
+            class="w-full rounded-lg border-slate-300 focus:border-brand-500 focus:ring-brand-500 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-slate-100 caret-brand-500 dark:caret-sky-300"></textarea>
+        </div>
+
+        <!-- Filters Row -->
+        <div class="flex flex-wrap items-center gap-2 text-sm">
+          <div class="inline-flex rounded-md shadow-sm" role="group">
+            <button data-filter="all" class="filter-btn px-3 py-1 rounded-l-md border border-slate-300 bg-white hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:hover:bg-slate-700">All</button>
+            <button data-filter="active" class="filter-btn px-3 py-1 border-t border-b border-slate-300 bg-white hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:hover:bg-slate-700">Active</button>
+            <button data-filter="completed" class="filter-btn px-3 py-1 rounded-r-md border border-slate-300 bg-white hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:hover:bg-slate-700">Completed</button>
+          </div>
+          <div class="flex items-center gap-2">
+            <label for="categoryFilter" class="text-slate-500 dark:text-slate-300">Category:</label>
+            <select id="categoryFilter" class="rounded-md border-slate-300 focus:border-brand-500 focus:ring-brand-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-100">
+              <option value="">All</option>
+            </select>
+          </div>
+          <button id="clearCompletedBtn" class="ml-auto inline-flex items-center gap-2 rounded-md border border-slate-300 px-3 py-1 hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+            Clear Completed
+          </button>
+        </div>
+      </div>
+
+      <!-- Task List -->
+      <ul id="taskList" class="divide-y divide-slate-200 dark:divide-slate-700">
+        <!-- Tasks will render here -->
+      </ul>
+
+      <!-- Stats Footer -->
+      <footer class="border-t border-slate-200 px-4 py-2 text-xs text-slate-500 flex items-center justify-between dark:border-slate-700 dark:text-slate-400">
+        <div id="taskStats">0 tasks • 0 active</div>
+        <div class="hidden sm:block">Tip: Enter to add, Esc to cancel edit</div>
+      </footer>
+    </main>
+
+    <!-- Toast / Celebration area -->
+    <div id="toastContainer" class="fixed left-1/2 top-4 -translate-x-1/2 space-y-2 z-50"></div>
+    <div id="confettiContainer" class="pointer-events-none fixed inset-0 z-40"></div>
+
+    <footer class="mt-6 text-center text-xs text-slate-500">
+      Single-session demo. Closing the tab will reset data.
+    </footer>
+  </div>
+
+  <!-- App Scripts -->
+  <!-- Markdown parser and sanitizer -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+  <script type="module" src="./scripts/app.js"></script>
+  <!-- PWA Diagnostic (temporary) -->
+  <script src="./pwa-diagnostic.js"></script>
+  <script>
+    // Initialize Lucide icons once DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js').catch(console.error);
+      }
+    });
+  </script>
+</body>
+</html>
